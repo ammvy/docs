@@ -1,0 +1,80 @@
+\newpage
+\subsection {Diagrama de caso de uso}
+
+Os requisitos foram agrupados, e na fase de análise foram definidos os casos de uso. A Figura~\ref{fig:diagramacasouso} representa o diagrama de caso de uso da aplicação.
+
+\begin{figure}[!htbp]
+	\centering
+	\caption{Diagrama de caso de uso.}
+	\fbox{\includegraphics[scale=.6]{imagens/exemploQuadro.png}}
+    \legend{Fonte: Autoria própria (2026)}	
+	\label{fig:diagramacasouso}
+\end{figure}
+
+\newpage
+\subsection {Requisitos funcionais}
+
+Na definição dos requisitos funcionais para o desenvolvimento da aplicação, foram agrupados conforme apresentado no Quadro~\ref{tab:casosreq}. 
+
+\begin{quadro}[!htbp]
+\centering
+\caption{Casos de Uso x Requisitos funcionais}
+    \begin{tabular}{ | m{1.7cm} | m{4cm}| m{9cm} | }
+		\hline
+		\cellcolor{gray!20}\textbf{No} & \cellcolor{gray!20}\textbf{Caso de Uso / Módulo} & \cellcolor{gray!20}\textbf{Descrição resumida} \\ \hline
+		RF-001 & Autenticação Unificada (SSO) & Permitir cadastro e login por meio de credenciais próprias ou OAuth 2.0 (Google, Apple, entre outros), mantendo a sessão sincronizada entre Web e App. \\ \hline
+		RF-002 & Gestão de Perfil e TDU & Permitir ao usuário gerenciar seus dados pessoais, histórico de buscas e refazer o quiz de Tipo de Uso (TDU) a qualquer momento. \\ \hline
+      	RF-003 & Sincronização Cross-Device & Sincronizar dispositivos favoritados e histórico de comparações em tempo real entre todas as plataformas autenticadas. \\ \hline
+      	RF-004 & Quiz de Perfilamento & Executar um fluxo interativo de perguntas (orçamento, finalidade principal e portabilidade) para classificar o usuário em um TDU específico. \\ \hline
+      	RF-005 & Busca Semântica & Converter termos de linguagem natural (ex.: "celular com câmera boa e barato") em filtros técnicos estruturados no banco de dados. \\ \hline
+      	RF-006 & Tags Baseadas em TDU & Exibir badges visuais nos produtos, priorizando atributos relevantes de acordo com o perfil do usuário (ex.: "Bateria Longa" para "Estudante"). \\ \hline
+     	RF-007 & Comparação Multidimensional & Gerar uma matriz comparativa lado a lado de até 4 dispositivos, destacando visualmente os atributos superiores. \\ \hline
+      	RF-008 & Dicionário Contextual & Exibir modais e tooltips explicativos para termos técnicos, contendo traduções leigas com apoio visual (ícones e descrições simples). \\ \hline
+        RF-009 & Gestão de Entidades & Disponibilizar painel administrativo com operações CRUD para fabricantes, modelos, especificações técnicas e mídias. \\ \hline
+        RF-010 & Gestão do Dicionário & Oferecer interface administrativa para criação e atualização das traduções leigas dos termos técnicos. \\ \hline
+	\end{tabular}
+    \label{tab:casosreq}
+    \\ \vspace{0.2cm}
+	Fonte: Autoria própria (2026)
+\end{quadro}
+
+\subsection {Requisitos de regras de negócio}
+Os requisitos de regras de negócios são readequados para a aplicação e apresentados no Quadro~\ref{tab:reqregrasnegocio}.
+
+\begin{quadro}[!htbp]
+\centering
+\caption{Requisitos de regras de negócio}
+	\begin{tabular}{ | m{1.7cm} | m{3cm}| m{10cm} | }
+		\hline
+		\cellcolor{gray!20}\textbf{No} & \cellcolor{gray!20}\textbf{Área de negócio} & \cellcolor{gray!20}\textbf{Descrição resumida} \\ \hline
+        RGN-01 & Perfilamento & O usuário pode refazer o quiz de Tipo de Uso (TDU), mas só pode ter um perfil principal ativo por vez.\\ \hline
+        RGN-02 & Catálogo & Um produto só pode ser listado no aplicativo se contiver os dados técnicos essenciais exigidos para a busca semântica.\\ \hline
+        RGN-03 & Afiliados & Todo redirecionamento para o varejo deve obrigatoriamente injetar as UTMs e o ID de afiliado da plataforma.\\ \hline
+        RGN-04 & Autenticação & Contas originadas via OAuth 2.0 não possuem senha gerenciada no sistema, dependendo do token do provedor.\\ \hline
+        RGN-05 & Backoffice & Apenas usuários com privilégios de Administrador podem criar, editar ou excluir termos no Dicionário Contextual.\\ \hline       
+	\end{tabular}
+	\\ \vspace{0.2cm}
+	Fonte: Autoria própria (2026)
+	\label{tab:reqregrasnegocio}
+\end{quadro}
+
+
+\subsection {Requisitos não funcionais}
+Os requisitos não funcionais são listados no Quadro~\ref{tab:reqnaofunc1}.
+
+\begin{quadro}[!htbp]
+\centering
+\caption{Requisitos não funcionais}
+	\begin{tabular}{ | m{1.7cm} | m{4cm}| m{9cm} | }
+		\hline
+		\cellcolor{gray!20}\textbf{No} & \cellcolor{gray!20}\textbf{Quanto a(o):} & \cellcolor{gray!20}\textbf{Descrição resumida} \\ \hline
+        RNF-01 & Segurança & O processamento de preferências, histórico e dados de sessão deve seguir as diretrizes da LGPD (Lei Geral de Proteção de Dados).\\ \hline
+        RNF-02 & Sincronização & O histórico de buscas e dispositivos favoritados deve ser sincronizado em tempo real ou com baixíssima latência entre plataformas.\\ \hline
+        RNF-03 & Disponibilidade & Os serviços de catálogo e redirecionamento de compras devem possuir alta disponibilidade (uptime de 99,9\%).\\ \hline
+        RNF-04 & Compatibilidade & A plataforma deve ser responsiva na Web e possuir aplicativo perfeitamente funcional em ecossistemas Android e iOS.\\ \hline
+        RNF-05 & Usabilidade & O dicionário de hardware e os modais explicativos devem seguir as normas de acessibilidade (WCAG) para contraste e leitores de tela.\\ \hline
+	\end{tabular}
+	\\ \vspace{0.2cm}
+	Fonte: Autoria própria (2026)
+	\label{tab:reqnaofunc1}
+\end{quadro}

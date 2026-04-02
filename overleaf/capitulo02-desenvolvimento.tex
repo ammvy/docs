@@ -1,0 +1,660 @@
+\chapter{Desenvolvimento}
+\label{cap:02}
+
+
+\section{Introdução}
+
+
+O projeto surgiu no decorrer de uma aula da disciplina onde a professora orientadora disponibilizou um tempo para que o grupo
+analizasse as próprias necessidades e identificasse problemas que poderiam ser solucionados com o desenvolvimento de uma aplicação.
+Depois de um debate extenso e algumas anotações, o grupo identificou que um problema comum entre os integrantes era a dificuldade
+em encontrar informações sobre hardwares, como processadores, placas de vídeo, memórias, etc. Isso especialmente para quem está 
+iniciando no assunto, pois os sites especializados costumam apresentar informações técnicas de forma complexa e de difícil compreensão.
+
+\section{Características da Aplicação}
+
+\subsection{Atores e seus papéis}
+
+\begin{itemize} 
+    \item {Administrador (\textit{Admin}):} Possui acesso a mutações e a todo o \textit{backlog} do sistema. Tem privilégios globais para gerenciar o Dicionário Contextual, as entidades de \textit{hardware} (fabricantes, modelos, especificações) e as configurações da plataforma.
+    \item {Usuário:} Está limitado ao seu próprio escopo. Possui acesso restrito às funcionalidades voltadas ao cliente final, podendo autenticar-se, gerenciar seu próprio perfil (TDU), realizar comparações, favoritar dispositivos e criar alertas de preço.
+\end{itemize}
+
+\subsection{Classes de usuários e características}
+
+\text {Os usuários e suas características são descritas no Quadro~\ref{tab:quadroClasses}.}
+
+\subsection{Classes de usuários e características}
+
+\text {Os usuários e suas características são descritas no Quadro~\ref{tab:quadroClasses}.}
+
+\begin{quadro}[!htbp]
+\centering
+\caption{Classes de usuários e características}
+	\begin{tabular}{ | m{4cm} | m{10cm}| }
+		\hline
+		\cellcolor{gray!20}\textbf{Classe} & \cellcolor{gray!20}\textbf{Descrição}  \\ \hline
+		Administradores   & São os usuários com privilégios elevados, responsáveis pelo gerenciamento do sistema, manutenção do Dicionário Contextual, controle do catálogo de \textit{hardware} (fabricantes, modelos e especificações) e operações de \textit{backoffice}. \\ \hline
+		Usuários          & São as pessoas que utilizam a plataforma HardDex no seu dia a dia; aproveitam as funcionalidades de busca semântica, realizam comparações de dispositivos com base no seu Tipo de Uso (TDU) e gerenciam seus alertas de preço. \\ \hline
+		Desenvolvedores   & São os profissionais responsáveis pela criação e implementação da plataforma HardDex; desenvolvem o sistema escrevendo o código necessário para garantir que ele seja seguro, escalável e atenda a todos os requisitos funcionais e não funcionais. \\ \hline
+	\end{tabular}
+	\\ \vspace{0.2cm}
+	Fonte: Autoria própria (2026)
+	\label{tab:quadroClasses}
+\end{quadro}
+
+
+
+\section{Arquitetura física}
+
+A arquitetura física adota o modelo cliente-servidor. A visualização das páginas é feita no navegador do usuário, enquanto a execução da aplicação fica por conta da comunicação de um servidor com o banco de dados. A Figura~\ref{fig:arqfisica} apresenta este modelo.
+
+\begin{figure}[!htbp]
+	\centering
+	\caption{Processo de funcionamento da aplicação.}
+    \fbox{\includegraphics[scale=.9]{imagens/fig_arquiteturaFisica.png}}
+    \legend{Fonte: Autoria própria (2026)}	
+	\label{fig:arqfisica}
+\end{figure}
+
+
+\subsection {Tecnologias utilizadas}
+
+As tecnologias utilizadas foram definidas com base no levantamento de requisitos, no ambiente operacional e nas restrições de projeto e implementação. A seleção visa garantir compatibilidade, escalabilidade, segurança e produtividade no desenvolvimento da aplicação.
+
+\begin{itemize} 
+    \item {Plataforma de desenvolvimento:} O ambiente de desenvolvimento integrado (IDE) adotado foi o \textit{ \citeonline{vstudio}}, utilizado por sua compatibilidade com múltiplas plataformas e integração com ferramentas de desenvolvimento.
+    \item {\textit{Front-end}:} Trata-se da parte do desenvolvimento responsável pela interface gráfica com o usuário, ou seja, o que ele vê e interage com a aplicação. Foram utilizados:
+        \begin{itemize} 
+        \item {\textit{\citeonline{vue}:}} Estrutura \textit{\citeonline{java}} acessível, de alto desempenho e versátil para criar interfaces de usuário;
+        \item {\textit{\citeonline{nuxt}:}} Estrutura para criar aplicativos que facilita o desenvolvimento, tanto da interface gráfica quanto da lógica e dados, com Vue.js.
+        \end{itemize}
+    \item {\textit{Back-end}:} Trata-se da parte da aplicação responsável pela lógica, armazenamento e processamento de dados, e a interação com bancos de dados e servidores. Foram utilizados:
+        \begin{itemize} 
+        \item {\textit{\citeonline{node}:}} Ambiente de execução de multiplataforma, que permite criar servidores, aplicações e programas de automação de tarefas.
+        \item {\textit{\citeonline{express}:}} Estrutura para aplicativos em Node.js que fornece um conjunto robusto de recursos para aplicativos \textit{web} e móveis.
+        \end{itemize}
+    \item {Banco de dados:}
+        \begin{itemize} 
+        \item {\textit{\citeonline{sqlite}:}} Biblioteca em linguagem C que implementa um mecanismo de banco de dados SQL pequeno, rápido e completo.
+        \end{itemize}
+    \item {Mapeamento Objeto-Relacional(ORM):}
+        \begin{itemize}     
+        \item {\textit{\citeonline{sequelize}:}} Mapeamento relacional para diversos bancos de dados (SQLite e outros) que apresenta suporte para carregamento e integração.
+        \end{itemize}
+\end{itemize}
+
+
+\section{Arquitetura lógica}
+
+Na arquitetura lógica da aplicação, foram definidos os diferentes componentes e módulos que interagem e se organizam para realizar as funcionalidades da aplicação. A Figura~\ref{fig:arqlogica} apresenta de forma simplificada a estrutura utilizada.
+
+\begin{itemize} 
+    \item {\textit{Front-end}:} A camada de interface do usuário foi desenvolvida com o \textit{Vue.js}, utilizando o \textit{Nuxt.js} para estruturação do projeto, o roteamento e a renderização das páginas, tanto no lado do cliente quanto do servidor. 
+
+    \item {\textit{Back-end}:} A lógica foi implementada em \textit{Node.js}, com o uso do \textit{Express.js} para a criação da \textit{API RESTful}.
+
+    \item {Banco de dados:} Os dados da aplicação são armazenados utilizando o \textit{SQLite}.
+
+    \item {Mapeamento Objeto-Relacional(ORM):} No mapeamento da aplicação com o banco de dados, foi utilizado o \textit{Sequelize}. 
+
+    \item {Tecnologia \textit{web} e integração:} A comunicação entre o \textit{front-end} e o \textit{back-end} foi feita por meio de \textit{API RESTful}, utilizando o padrão JSON para a troca de dados. A \textit{API Restful} é um tipo de interface de programação de aplicações (API) que se baseia em recursos (como URLs) e utiliza os métodos (\textit{GET, POST, PUT, DELETE}, etc.) para realizar operações como leitura, criação, atualização e exclusão de dados.
+\end{itemize}
+
+\begin{figure}[!htbp]
+	\centering
+	\caption{Arquitetura lógica com as principais tecnologias.}
+	\fbox{\includegraphics[scale=.41]{imagens/fig_arquiteturaLogica.png}}
+    \legend{Fonte: Autoria própria (2026)}	
+	\label{fig:arqlogica}
+\end{figure}
+
+\newpage
+\subsection {Diagrama de caso de uso}
+
+Os requisitos foram agrupados, e na fase de análise foram definidos os casos de uso. A Figura~\ref{fig:diagramacasouso} representa o diagrama de caso de uso da aplicação.
+
+\begin{figure}[!htbp]
+	\centering
+	\caption{Diagrama de caso de uso.}
+	\fbox{\includegraphics[scale=.6]{imagens/exemploQuadro.png}}
+    \legend{Fonte: Autoria própria (2026)}	
+	\label{fig:diagramacasouso}
+\end{figure}
+
+\newpage
+\subsection {Requisitos funcionais}
+
+Na definição dos requisitos funcionais para o desenvolvimento da aplicação, foram agrupados conforme apresentado no Quadro~\ref{tab:casosreq}. 
+
+\begin{quadro}[!htbp]
+\centering
+\caption{Casos de Uso x Requisitos funcionais}
+    \begin{tabular}{ | m{1.7cm} | m{4cm}| m{9cm} | }
+		\hline
+		\cellcolor{gray!20}\textbf{No} & \cellcolor{gray!20}\textbf{Caso de Uso / Módulo} & \cellcolor{gray!20}\textbf{Descrição resumida} \\ \hline
+		RF-001 & Autenticação Unificada (SSO) & Permitir cadastro e login por meio de credenciais próprias ou OAuth 2.0 (Google, Apple, entre outros), mantendo a sessão sincronizada entre Web e App. \\ \hline
+		RF-002 & Gestão de Perfil e TDU & Permitir ao usuário gerenciar seus dados pessoais, histórico de buscas e refazer o quiz de Tipo de Uso (TDU) a qualquer momento. \\ \hline
+      	RF-003 & Sincronização Cross-Device & Sincronizar dispositivos favoritados e histórico de comparações em tempo real entre todas as plataformas autenticadas. \\ \hline
+      	RF-004 & Quiz de Perfilamento & Executar um fluxo interativo de perguntas (orçamento, finalidade principal e portabilidade) para classificar o usuário em um TDU específico. \\ \hline
+      	RF-005 & Busca Semântica & Converter termos de linguagem natural (ex.: "celular com câmera boa e barato") em filtros técnicos estruturados no banco de dados. \\ \hline
+      	RF-006 & Tags Baseadas em TDU & Exibir badges visuais nos produtos, priorizando atributos relevantes de acordo com o perfil do usuário (ex.: "Bateria Longa" para "Estudante"). \\ \hline
+     	RF-007 & Comparação Multidimensional & Gerar uma matriz comparativa lado a lado de até 4 dispositivos, destacando visualmente os atributos superiores. \\ \hline
+      	RF-008 & Dicionário Contextual & Exibir modais e tooltips explicativos para termos técnicos, contendo traduções leigas com apoio visual (ícones e descrições simples). \\ \hline
+        RF-009 & Gestão de Entidades & Disponibilizar painel administrativo com operações CRUD para fabricantes, modelos, especificações técnicas e mídias. \\ \hline
+        RF-010 & Gestão do Dicionário & Oferecer interface administrativa para criação e atualização das traduções leigas dos termos técnicos. \\ \hline
+	\end{tabular}
+    \label{tab:casosreq}
+    \\ \vspace{0.2cm}
+	Fonte: Autoria própria (2026)
+\end{quadro}
+
+\subsection {Requisitos de regras de negócio}
+Os requisitos de regras de negócios são readequados para a aplicação e apresentados no Quadro~\ref{tab:reqregrasnegocio}.
+
+\begin{quadro}[!htbp]
+\centering
+\caption{Requisitos de regras de negócio}
+	\begin{tabular}{ | m{1.7cm} | m{3cm}| m{10cm} | }
+		\hline
+		\cellcolor{gray!20}\textbf{No} & \cellcolor{gray!20}\textbf{Área de negócio} & \cellcolor{gray!20}\textbf{Descrição resumida} \\ \hline
+        RGN-01 & Perfilamento & O usuário pode refazer o quiz de Tipo de Uso (TDU), mas só pode ter um perfil principal ativo por vez.\\ \hline
+        RGN-02 & Catálogo & Um produto só pode ser listado no aplicativo se contiver os dados técnicos essenciais exigidos para a busca semântica.\\ \hline
+        RGN-03 & Afiliados & Todo redirecionamento para o varejo deve obrigatoriamente injetar as UTMs e o ID de afiliado da plataforma.\\ \hline
+        RGN-04 & Autenticação & Contas originadas via OAuth 2.0 não possuem senha gerenciada no sistema, dependendo do token do provedor.\\ \hline
+        RGN-05 & Backoffice & Apenas usuários com privilégios de Administrador podem criar, editar ou excluir termos no Dicionário Contextual.\\ \hline             
+	\end{tabular}
+	\\ \vspace{0.2cm}
+	Fonte: Autoria própria (2026)
+	\label{tab:reqregrasnegocio}
+\end{quadro}
+
+
+\subsection {Requisitos não funcionais}
+Os requisitos não funcionais são listados no Quadro~\ref{tab:reqnaofunc1}.
+
+\begin{quadro}[!htbp]
+\centering
+\caption{Requisitos não funcionais}
+	\begin{tabular}{ | m{1.7cm} | m{4cm}| m{9cm} | }
+		\hline
+		\cellcolor{gray!20}\textbf{No} & \cellcolor{gray!20}\textbf{Quanto a(o):} & \cellcolor{gray!20}\textbf{Descrição resumida} \\ \hline
+        RNF-01 & Segurança & O processamento de preferências, histórico e dados de sessão deve seguir as diretrizes da LGPD (Lei Geral de Proteção de Dados).\\ \hline
+        RNF-02 & Sincronização & O histórico de buscas e dispositivos favoritados deve ser sincronizado em tempo real ou com baixíssima latência entre plataformas.\\ \hline
+        RNF-03 & Disponibilidade & Os serviços de catálogo e redirecionamento de compras devem possuir alta disponibilidade (uptime de 99,9\%).\\ \hline
+        RNF-04 & Compatibilidade & A plataforma deve ser responsiva na Web e possuir aplicativo perfeitamente funcional em ecossistemas Android e iOS.\\ \hline
+        RNF-05 & Usabilidade & O dicionário de hardware e os modais explicativos devem seguir as normas de acessibilidade (WCAG) para contraste e leitores de tela.\\ \hline
+	\end{tabular}
+	\\ \vspace{0.2cm}
+	Fonte: Autoria própria (2026)
+	\label{tab:reqnaofunc1}
+\end{quadro}
+
+\newpage
+\subsection {Especificações funcionais}
+
+Aborda-se agora, o detalhamento das especificações funcionais do sistema na seguinte ordem:
+
+- Especificação UC 001: Acesso/Autenticação.
+
+- Especificação UC 002: Manter usuário(a).
+
+- Especificação UC 003: Manter cliente.
+
+- Especificação UC 004: Manter produto. \\
+
+
+\newpage
+\subsubsection {Especificação UC 0001: Acesso/Autenticação}
+\begin{center}
+    \begin{tabular}{  | c |  }
+        \hline
+            \textbf {HARDDEX - COMPARAÇÃO DE HARDWARE}\\ 
+            \textbf {ESPECIFICAÇÃO FUNCIONAL: UC 0001 - Acesso/Autenticação}\\ 
+        \hline
+    \end{tabular}
+\end{center}
+
+       \textbf {Descrição Resumida do Caso de Uso} 
+       
+        Este caso de uso tem por objetivo descrever as funcionalidades pertinentes ao acesso e autenticação dos clientes, onde o usuário pode se cadastrar, fornecendo seu nome de login (e-mail e senha) do usuário, permitindo que suas informações estejam sempre atualizadas.
+
+\begin{quadro}[!htbp]
+	\begin{tabular}{  m{4cm}  m{11cm} }
+		\cellcolor{gray!10}\textbf {Atores}                & \cellcolor{gray!10} Administrador, Usuário.  \\ \hline
+        \textbf {Pré-Condição}          & O Administrador ou Usuário deve ter acesso/autenticação no sistema.  \\ \hline
+       
+        \cellcolor{gray!10}\textbf {Fluxo Principal}       & \cellcolor{gray!10}\textbf {P01.} O usuário acessa o sistema que inicialmente possui a opção de novo cadastro.
+        
+        \textbf {P02.} O Sistema apresenta os campos em aberto necessários para realizar o cadastro, tais como nome, e-mail, senha, telefone e outros.
+        
+        \textbf {P03.} O Sistema verifica se login e senha são validos.
+        
+        \textbf {P04.} O Sistema exibe a mensagem MSG001.
+        
+        \textbf {P05.} O Usuário acessa o e-mail enviado acessando o link anexado para confirma o cadastro.
+        
+        \textbf {P06.} O Usuário é levado a tela inicial do aplicativo para realizar seu primeiro login.
+        
+        \textbf {P07.} O caso de uso termina. \\ \hline
+
+        \textbf {Fluxo  Alternativos}  & \textbf {A01 [P02] - Dados inválidos}
+  
+        1. O Sistema exibe a mensagem MSG002.
+        
+        2. O Sistema solicita que os dados sejam preenchidos nova.
+        
+        3. Os dados são preenchidos e checados até a confirmação de dados válidos.
+        
+        4. O caso de uso continua a execução no passo [P03].
+        
+        \textbf {A02 [P02] - Registro existente}
+        
+        1. O Sistema exibe a mensagem MSG003.
+        
+        2. O Sistema confere os dados informados que possuem informações cadastradas e fornece a opção de enviar um e-mail de redefinição de senha.
+        
+        3. O Sistema envia o e-mail de redefinição de senha, se solicitado.
+        
+        4. O caso de uso continua a execução no passo [P03].
+        
+        \textbf {A03 [P02] - E-mail em uso}
+        
+        1. O Sistema exibe a mensagem MSG004.
+        
+        2. O Usuário fornece um e-mail diferente.
+        
+        3. O sistema valida se o e-mail não possui registro.
+        
+        4. Se a validação for um sucesso, o caso de uso continua no passo [P03].  \\ \hline  
+	\end{tabular}
+\end{quadro}
+
+\newpage
+\begin{quadro}[!htbp]
+	\begin{tabular}{  m{4cm}  m{11cm} }  	
+        \cellcolor{gray!10}\textbf {Exceções}            & \cellcolor{gray!10}\textbf {E01 [A01.3] - Nome do usuário já registrado}
+        
+        1. O sistema exibe a mensagem MSG003.
+        
+        2. Retorna ao passo [P02].
+        
+        \textbf {E02 [A01.3] - CPF do usuário já registrado}
+        
+        1. O sistema exibe a mensagem MSG003.
+        
+        2. Retorna ao passo [P02].
+        
+        \textbf {E03 [A01.3] - Ausência de dados obrigatórios de usuário}
+        
+        1. O sistema exibe a mensagem MSG005.
+        
+        2. Retorna ao passo [A01.2].
+        
+        \textbf {E04 [P01] - Nome ou CPF de cliente não localizado}
+        
+        1. O sistema exibe a mensagem MSG005.
+        
+        2. Retorna ao passo [P01].  \\ \hline
+	
+        \textbf {Pós-Condição}        & Acesso concedido ou negado.  \\ \hline
+  	
+        \cellcolor{gray!10}\textbf {Produtos Gerados}    & \cellcolor{gray!10} Não se aplica.  \\ \hline
+        
+        \textbf {Requisitos}          & REQ-01, REQ-02.  \\ \hline
+        
+        \cellcolor{gray!10}\textbf {Regras de Negócio}   & \cellcolor{gray!10} RGN-01, RGN-02, RGN-03.  \\ \hline
+        
+        \textbf {Casos de Uso Incluídos} & Não se aplica.  \\ \hline
+
+        \cellcolor{gray!10} \textbf {Casos de Uso Estendidos} & \cellcolor{gray!10} Não se aplica.  \\ \hline
+
+%        \cellcolor{gray!10} \textbf {Casos de Uso Estendidos} & \cellcolor{gray!10} UC002 - Manter Usuário, UC003 - Manter Cliente, UC004 - Manter Produto, UC007 - Realiza Pedido, UC008 - Manter Promoção.  \\ \hline
+        
+        \textbf {Listagem de Mensagens}   & MSG001: E-mail de autenticação enviado.
+        
+        MSG002: Nome ou e-mail inválidos.
+
+        MSG003: Dados informados já possuem cadastro.
+
+        MSG004: E-mail em uso.
+          
+        MSG005: Ausência de dados obrigatórios de usuário.  \\ \hline
+        
+        \cellcolor{gray!10} \textbf {Interfaces}   & \cellcolor{gray!10} Interface001: Inicial (Figura~\ref{fig:protInicial}).
+        
+        Interface002: Login (Figura~\ref{fig:protInicial}).  \\ \hline 
+	\end{tabular}
+\end{quadro}
+
+
+
+
+\newpage
+\subsubsection {Especificação UC 0002: Manter usuário}
+
+\begin{center}
+    \begin{tabular}{  | c |  }
+        \hline
+             \textbf {HARDDEX - COMPARAÇÃO DE HARDWARE}\\
+            \textbf {ESPECIFICAÇÃO FUNCIONAL: UC 0002 - Manter Usuário}\\
+        \hline
+    \end{tabular}
+\end{center}
+
+        \textbf {Descrição Resumida do Caso de Uso} 
+        
+        Este caso de uso descreve as funcionalidades para manter os dados dos usuários no sistema, incluindo cadastro, consulta, atualização e exclusão.
+        
+\begin{quadro}[!htbp]
+	\begin{tabular}{  m{4cm}  m{11cm} }
+        \cellcolor{gray!10} \textbf {Atores}                & \cellcolor{gray!10} Administrador, Usuário.  \\ \hline
+        \textbf {Pré-Condição}          & O Administrador ou Usuário deve ter acesso/autenticação no sistema.  \\ \hline
+       
+        \cellcolor{gray!10} \textbf {Fluxo Principal}       & \cellcolor{gray!10} \textbf {P01.} O Administrador ou Usuário informa o cnpj/cpf ou nome de usuário para pesquisar.
+        
+        \textbf {P02.} O Sistema verifica os dados do usuário que combina com a consulta.
+        
+        \textbf {P03.} O Administrador ou Usuário seleciona o desejado.
+        
+        \textbf {P04.} O Sistema apresenta os dados preenchidos à respeito do usuário selecionado.
+        
+        \textbf {P05.} O Sistema exibe as opções disponíveis que podem:
+        
+        -para o Administrador: inclusão, atualização, exclusão de um usuário, voltar.
+        
+        - para o Usuário: atualização, exclusão do usuário, voltar.
+        
+        \textbf {P06.} O Administrador ou Usuário seleciona a opção voltar.
+        
+        \textbf {P07.} O caso de uso termina. \\ \hline
+	
+        \textbf {Fluxo  Alternativos}  & \textbf {A01 [P06] - Inserção de um usuário}
+        
+        1. O Administrador seleciona a opção de inclusão ou outra opção ou opta por finalizar o caso de uso.
+        
+        2. O Sistema disponibiliza campos para preenchimento pelo usuário.
+        
+        3. O Administrador informa os dados: código do usuário, nome do usuário, descrição do login, senha, e-mail.
+        
+        4. O Sistema registra as informações e apresenta a mensagem MSG001.
+        
+        5. O caso de uso continua a execução no passo [P04].
+        
+        \textbf {A02 [P06] - Atualização de um usuário}
+        
+        1. O Administrador seleciona a opção de atualização ou outra opção ou opta por finalizar o caso de uso.
+        
+        2. O Sistema habilita para o modo editável as informações pertinentes ao usuário.
+        
+        3. O Administrador informa as atualizações a serem feitas.
+        
+        4. O Sistema registra as alterações.
+        
+        5. O caso de uso continua a execução no passo [P04].  \\ \hline
+	\end{tabular}
+\end{quadro}
+
+\newpage
+
+\begin{quadro}[!htbp]
+	\begin{tabular}{  m{4cm}  m{11cm} }
+        \textbf {Fluxo  Alternativos}  & \textbf {A03 [P06] Exclusão de um usuário}
+        
+        1. O Administrador seleciona a opção de exclusão ou outra opção ou opta por finalizar o caso de uso.
+        
+        2. O Sistema exibe a mensagem MSG002.
+        
+        3. O Administrador confirma a exclusão.
+        
+        4. O Sistema realiza a exclusão e apresenta a mensagem MSG003.
+        
+        5. O caso de uso continua a execução no passo [P01].  \\ \hline
+	
+        \cellcolor{gray!10} \textbf {Exceções}            & \cellcolor{gray!10} \textbf {E01 [A01.3] - CPF/CNPJ do usuário já registrado}
+        
+        1. O sistema exibe a mensagem MSG004.
+        
+        2. Retorna ao passo [P01].
+        
+        \textbf {E02 [A01.3] - Nome de usuário já registrado}
+        
+        1. O sistema exibe a mensagem MSG004.
+        
+        2. Retorna ao passo [P01].
+        
+        \textbf {E03 [A01.3] - Ausência de dados obrigatórios de usuário}
+        
+        1. O sistema exibe a mensagem MSG005.
+        
+        2. Retorna ao passo [A01.2].
+        
+        \textbf {E04 [P01] - CPF/CNPJ ou Nome do Usuário não localizado}
+        
+        1. O sistema exibe a mensagem MSG006.      
+        
+        2. Retorna ao passo [P01].  \\ \hline
+	
+        \textbf {Pós-Condição}        & Usuário cadastrado, atualizado ou excluído no sistema.  \\ \hline
+  	
+        \cellcolor{gray!10} \textbf {Produtos Gerados}    & \cellcolor{gray!10} Não se aplica.  \\ \hline
+        
+        \textbf {Requisitos}          & REQ-05, REQ-06, REQ-07, REQ-08.  \\ \hline
+        
+        \cellcolor{gray!10} \textbf {Regras de Negócio}   & \cellcolor{gray!10} RGN-04, RGN-05.  \\ \hline
+        
+        \textbf {Casos de Uso Incluídos} & Não se aplica.  \\ \hline
+
+        \cellcolor{gray!10} \textbf {Casos de Uso Estendidos} & \cellcolor{gray!10} Não se aplica.  \\ \hline
+        
+        \textbf {Listagem de Mensagens}   & MSG001: Registro inserido com sucesso.
+        
+        MSG002: Confirma exclusão?
+
+        MSG003: Registro excluído com sucesso.
+
+        MSG004: Registro existente.
+
+        MSG005: Dados obrigatórios não informados.
+
+        MSG006: Registro não localizado.  \\ \hline
+
+        \cellcolor{gray!10} \textbf {Interfaces}   & \cellcolor{gray!10} Interface001: Cadastro (Figura~\ref{fig:protInicial}).
+          \\ \hline        
+	\end{tabular}
+\end{quadro}
+
+
+
+
+\newpage
+\subsubsection{Especificação UC 0003: Manter cliente}
+\begin{center}
+    \begin{tabular}{  | c |  }
+        \hline
+            \textbf {HARDDEX - COMPARAÇÃO DE HARDWARE}\\
+            \textbf {ESPECIFICAÇÃO FUNCIONAL: UC 0003 - Manter Cliente}\\    
+           
+        \hline
+    \end{tabular}
+\end{center}
+
+       \textbf {Descrição Resumida do Caso de Uso}        
+        
+        Este caso de uso descreve as funcionalidades para manter os dados dos clientes no sistema, incluindo cadastro, consulta, atualização e exclusão.
+        
+\begin{quadro}[!htbp]
+	\begin{tabular}{  m{4cm}  m{11cm} }
+        \cellcolor{gray!10} \textbf {Atores}                & \cellcolor{gray!10} Administrador, Usuário.  \\ \hline
+        \textbf {Pré-Condição}          & O Administrador ou Usuário deve ter acesso/autenticação no sistema.  \\ \hline
+       
+        \cellcolor{gray!10} \textbf {Fluxo Principal}       & \cellcolor{gray!10} \textbf {P01.} O Responsável pelo setor informa o cpf/cnpj ou nome do cliente para pesquisar.
+        
+        \textbf {P02.} O Sistema apresenta os dados dos clientes que combinam com a consulta.
+        
+        \textbf {P03.} O Responsável pelo setor seleciona o cliente desejado.
+        
+        \textbf {P04.} O Sistema apresenta os dados preenchidos à respeito do cliente selecionado.
+        
+        \textbf {P05.} O Sistema exibe as opções disponíveis que podem:
+        
+        - para o Administrador: inclusão de um cliente, atualização de cliente, exclusão de um cliente, voltar; e,
+        
+        - para o Usuário: inclusão, atualização de cliente, voltar.
+        
+        \textbf {P06.} O Administrador ou Usuário seleciona a opção voltar.
+        
+        \textbf {P07.} O caso de uso termina. \\ \hline
+		
+        \textbf {Fluxo  Alternativos}  & \textbf {A01 [P06] - Inserção de um cliente}
+        
+        1. O Administrador ou Usuário seleciona a opção de inclusão ou outra opção ou opta por finalizar o caso de uso.
+        
+        2. O Sistema apresenta os campos para preenchimento dos dados do cliente.
+        
+        3. O Administrador ou Usuário informa os dados: CPF/CNPJ, nome, endereço, número, complemento, bairro, cep, cidade, estado, pais, telefone, e-mail, descrição e senha.
+        
+        4. O Sistema registra as informações e apresenta a mensagem MSG001.
+        
+        5. O caso de uso continua a execução no passo [P04].
+        
+        \textbf {A02 [P06] - Atualização de um cliente}
+        
+        1. O Administrador ou Usuário seleciona a opção de atualização ou outra opção ou opta por finalizar o caso de uso.
+        
+        2. O Sistema habilita os campos para o modo editável com as informações do cliente selecionado.
+        
+        3. O Administrador ou Usuário informa as atualizações a serem feitas.
+        
+        4. O Sistema registra as alterações.
+        
+        5. O caso de uso continua a execução no passo [P04]. \\ \hline
+		\end{tabular}
+\end{quadro}
+
+\newpage
+\begin{quadro}[!htbp]
+	\begin{tabular}{  m{4cm}  m{11cm} }
+        \textbf {Fluxo  Alternativos}  & \textbf {A03 [P06] - Exclusão de um cliente}
+        
+        1. O Administrador ou Usuário seleciona a opção de exclusão ou outra opção ou opta por finalizar o caso de uso.
+        
+        2. O Sistema exibe a mensagem MSG002.
+        
+        3. O Administrador confirma a exclusão.
+        
+        4. O Sistema realiza a exclusão e apresenta a mensagem MSG003.        
+        
+        5. O caso de uso continua a execução no passo [P01].\\ \hline
+        
+        \cellcolor{gray!10} \textbf {Exceções}            & \cellcolor{gray!10} \textbf {E01 [A01.3] - CPF/CNPJ do cliente já registrado}
+        
+        1. O sistema exibe a mensagem MSG004.
+        
+        2. Retorna ao passo [P01].
+        
+        \textbf {E02 [A01.3] - Nome do cliente já registrado}
+        
+        1. O sistema exibe a mensagem MSG004.
+        
+        2. Retorna ao passo [P01].
+        
+        \textbf {E03 [A01.3] - Ausência de dados obrigatórios de cliente}
+        
+        1. O sistema exibe a mensagem MSG005.
+        
+        2. Retorna ao passo [A01.2].
+        
+        \textbf {E05 [P01] – CPF/CNPJ ou Nome do cliente não localizado}
+        
+        1. O sistema exibe a MSG006.
+        
+        2. Retorna ao passo [P01].  \\ \hline
+		
+        \textbf {Pós-Condição}        & Cliente cadastrado, atualizado ou excluído no sistema.  \\ \hline
+  	
+        \cellcolor{gray!10} \textbf {Produtos Gerados}    & \cellcolor{gray!10} Não se aplica.  \\ \hline
+        
+        \textbf {Requisitos}          & REQ-09, REQ-10, REQ-11, REQ-12.  \\ \hline
+        
+        \cellcolor{gray!10} \textbf {Regras de Negócio}   & \cellcolor{gray!10} RGN-06.  \\ \hline
+        
+        \textbf {Casos de Uso Incluídos} & Não se aplica.  \\ \hline
+        
+        \cellcolor{gray!10} \textbf {Casos de Uso Estendidos} & \cellcolor{gray!10} Não se aplica.  \\ \hline
+        
+        \textbf {Listagem de Mensagens}   & MSG001: Cliente inserido com sucesso.
+        
+        MSG002: Confirma exclusão?
+
+        MSG003: Cliente excluído com sucesso.
+
+        MSG004: Cliente existente.
+        
+        MSG005: Dados obrigatórios não informados.
+
+        MSG006: Cliente não localizado.  \\ \hline
+
+        \cellcolor{gray!10} \textbf {Interfaces}   & Interface001: Cadastro (Figura~\ref{fig:protInicial}).
+        \\ \hline        
+	\end{tabular}
+\end{quadro}
+
+
+
+\newpage
+\subsection {Diagrama de Atividades}
+
+Para \citeonline{sommerville}, o diagrama de atividades representa a sequência de atividades de um sistema ou processo, utilizando elementos como atividades e ações para ilustrar o fluxo de controle e dados. A Figura~\ref{fig:diagramaAtivAdm} apresenta o diagrama do administrador. O processo do sistema é iniciado com a exibição da tela de login, onde o administrador insere suas credenciais. Após a autenticação, ele pode navegar pelas seções de produtos, consultar usuários e emitir relatórios.
+
+
+\begin{figure}[!htbp]
+	\centering
+	\caption{Diagrama de atividades (Administrador).}
+	\fbox{\includegraphics[scale=.4]{imagens/exemploQuadro.png}}
+    \legend{Fonte: Autoria própria (2026)}
+	\label{fig:diagramaAtivAdm}
+\end{figure}
+
+\newpage
+Já a Figura~\ref{fig:diagramaAtivUsu} ilustra o diagrama de atividades do usuário. O processo do sistema se inicia com a exibição da tela de login, onde o usuário insere suas credenciais. Após a autenticação, ele pode alterar seu cadastro, navegar pela seção de produtos, adicionar itens ao carrinho, realizar a compra e finalizar com o processamento do pagamento.
+
+\begin{figure}[!htbp]
+	\centering
+	\caption{Diagrama de atividades (Usuário).}
+	\fbox{\includegraphics[scale=.4]{imagens/exemploQuadro.png}}
+    \legend{Fonte: Autoria própria (2026)}
+	\label{fig:diagramaAtivUsu}
+\end{figure}
+
+
+\newpage
+\subsection {Diagrama de classes de domínio}
+
+ Conforme \citeonline{sommerville}, o diagrama de classes mostra as classes de objeto no sistema e as associações entre elas, ou seja, representa os objetos e suas interações dentro de um domínio específico. A Figura~\ref{fig:diagramaClasses} mostra o diagrama do sistema, destacando as classes, seu atributos e os relacionamentos entre elas.
+ 
+\begin{figure}[!htbp]
+	\centering
+	\caption{Diagrama de Classes de Domínio}
+	\fbox{\includegraphics[scale=.47]{imagens/exemploQuadro.png}}
+    \legend{Fonte: Autoria própria (2026)}
+	\label{fig:diagramaClasses}
+\end{figure}
+
+
+\newpage
+\section{Protótipos}
+
+Para o desenvolvimento do sistema, foram elaborados diversos protótipos de interface com foco em usabilidade, coerência visual e experiência do usuário.
+
+
+
+A Figura~\ref{fig:protInicial} apresenta o protótipo da tela inicial da plataforma.
+
+\begin{figure}[!htbp]
+	\centering
+	\caption{Protótipo tela inicial.}
+	\fbox{\includegraphics[scale=.42]{imagens/exemploQuadro.png}}
+    \legend{Fonte: Autoria própria (2026)}	
+	\label{fig:protInicial}
+\end{figure}
